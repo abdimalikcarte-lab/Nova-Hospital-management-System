@@ -8,8 +8,8 @@ import {
 
 import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 
-import Login from "./pages/Login.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
+import Login from "./pages/Login/Login.jsx";
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import ModulePlaceholder from "./pages/ModulePlaceholder.jsx";
 import MainLayout from "./layouts/MainLayout.jsx";
 
@@ -17,7 +17,11 @@ function ProtectedRoute() {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <div className="loading-screen">Loading Nova HMS...</div>;
+    return (
+      <div className="loading-screen">
+        Loading Nova HMS...
+      </div>
+    );
   }
 
   return user ? <Outlet /> : <Navigate to="/login" replace />;
@@ -30,7 +34,9 @@ function PermissionRoute({ permission, children }) {
     return (
       <div className="access-denied">
         <h2>Access Denied</h2>
-        <p>You do not have permission to access this module.</p>
+        <p>
+          You do not have permission to access this module.
+        </p>
       </div>
     );
   }
@@ -56,7 +62,10 @@ const modules = [
 function ApplicationRoutes() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
+      <Route
+        path="/login"
+        element={<Login />}
+      />
 
       <Route element={<ProtectedRoute />}>
         <Route element={<MainLayout />}>
@@ -83,7 +92,10 @@ function ApplicationRoutes() {
         </Route>
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route
+        path="*"
+        element={<Navigate to="/" replace />}
+      />
     </Routes>
   );
 }
@@ -95,4 +107,3 @@ export default function App() {
     </AuthProvider>
   );
 }
-
